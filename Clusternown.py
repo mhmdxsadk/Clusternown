@@ -2,8 +2,10 @@ from rich.console import Console
 from rich.theme import Theme
 import pydirectinput as pdi
 from time import sleep
+from PIL import Image
 import webbrowser
 import pyautogui
+import requests
 import psutil
 import os
 
@@ -23,6 +25,14 @@ class Bot:
          ╚═════╝╚══════╝ ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝"""
         self.author = 'RTxNINJA'
         self.version = '2.8.0'
+
+        self.playImage = Image.open(requests.get("", stream=True).raw)
+        self.trainingImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Training.png", stream=True).raw)
+        self.loneWolfImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Lone-Wolf.png", stream=True).raw)
+        self.locationsImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Locations.png", stream=True).raw)
+        self.operatorsImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Operators.png", stream=True).raw)
+        self.loadoutImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Loadout.png", stream=True).raw)
+        self.retryImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Retry.png", stream=True).raw)
 
     def openR6(self):
         pass
@@ -44,7 +54,7 @@ class Bot:
     def findImage(self, image):
         console.print(f"Looking for {image} button...", style="process")
         for i in range(300):
-            if pyautogui.locateOnScreen(f'assets\\{image}.png', confidence=0.6):
+            if pyautogui.locateOnScreen(image, confidence=0.6):
                 console.print(f"Found {image} button!", style="success")
                 print()
                 return
@@ -52,20 +62,20 @@ class Bot:
                 sleep(0.5)
 
     def enterMatch(self):
-        self.findImage('Menu')
+        self.findImage(self.playImage)
         sleep(3)
         pdi.press("left")
         sleep(0.25)
         pdi.press("enter")
 
-        self.findImage('Training')
+        self.findImage(self.trainingImage)
         sleep(1)
         pdi.press("left")
         sleep(0.25)
         pdi.press("enter")
         sleep(1)
 
-        self.findImage('Lone-Wolf')
+        self.findImage(self.loneWolfImage)
         sleep(1)
         pdi.press("f")
         sleep(0.25)
@@ -77,13 +87,13 @@ class Bot:
         sleep(1)
     
     def preMatchConfig(self):
-        self.findImage('Locations')
+        self.findImage(self.locationsImage)
         sleep(1)
         pdi.press("down")
         sleep(0.25)
         pdi.press("enter")
 
-        self.findImage('Operators')
+        self.findImage(self.operatorsImage)
         sleep(1)
         pdi.press("down")
         sleep(0.25)
@@ -97,12 +107,12 @@ class Bot:
         sleep(0.25)
         pdi.press("enter")
 
-        self.findImage('Loadout')
+        self.findImage(self.loadoutImage)
         sleep(1)
         pdi.press("enter")
         
     def retryMatch(self):
-        self.findImage('Retry')
+        self.findImage(self.retryImage)
         sleep(1)
         pdi.press("enter")
 
