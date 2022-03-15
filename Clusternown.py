@@ -26,7 +26,7 @@ class Bot:
         self.author = 'RTxNINJA'
         self.version = '2.8.0'
 
-        self.playImage = Image.open(requests.get("", stream=True).raw)
+        self.playImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Play.png", stream=True).raw)
         self.trainingImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Training.png", stream=True).raw)
         self.loneWolfImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Lone-Wolf.png", stream=True).raw)
         self.locationsImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Locations.png", stream=True).raw)
@@ -64,8 +64,6 @@ class Bot:
     def enterMatch(self):
         self.findImage(self.playImage)
         sleep(3)
-        pdi.press("left")
-        sleep(0.25)
         pdi.press("enter")
 
         self.findImage(self.trainingImage)
