@@ -1,12 +1,12 @@
 from rich.console import Console
 from rich.theme import Theme
 import pydirectinput as pdi
-from time import sleep
 from PIL import Image
 import webbrowser
 import pyautogui
 import requests
 import psutil
+import time
 import os
 
 theme = Theme({"success": "green", "error": "bold red1", "process": "blue"})
@@ -26,6 +26,8 @@ class Bot:
         self.author = 'RTxNINJA'
         self.version = '2.8.0'
 
+        self.consoleSize = os.get_terminal_size()
+
         self.playImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Play.png", stream=True).raw)
         self.trainingImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Training.png", stream=True).raw)
         self.loneWolfImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Lone-Wolf.png", stream=True).raw)
@@ -35,14 +37,14 @@ class Bot:
         self.retryImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Retry.png", stream=True).raw)
 
     def openR6(self):
-        pass
         webbrowser.open_new_tab("steam://rungameid/359550")
         
     def isR6Running(self):
         if "RainbowSix.exe" in (p.name() for p in psutil.process_iter()):
             os.system("taskkill /f /im RainbowSix.exe")
+
         console.clear()
-        sleep(5)
+        time.sleep(5)
         self.openR6()
 
     def welcomeScreen(self):
@@ -51,67 +53,74 @@ class Bot:
         console.print(f"Version: {self.version}", style="turquoise2", justify="center")
         console.print()
 
-    def findImage(self, image):
-        console.print(f"Looking for {image} button...", style="process")
+    def findImage(self, image, imageName):
+        lookingForImage = f"[-] LOOKING FOR {imageName.upper()} BUTTON..."
+        foundImage = f"[✓] FOUND {imageName.upper()} BUTTON!"
+        currentTime = f"{time.strftime('%I:%M %p', time.localtime())}]"
+        lookingForImagePadding = self.consoleSize.columns - len(lookingForImage) -  len(currentTime)
+        foundImagePadding = self.consoleSize.columns - len(foundImage) -  len(currentTime)
+
+        console.print(f"{lookingForImage}{'[':>{lookingForImagePadding}}{currentTime}", style="process")
         for i in range(300):
             if pyautogui.locateOnScreen(image, confidence=0.6):
-                console.print(f"Found {image} button!", style="success")
+                console.print(f"{foundImage}{'[':>{foundImagePadding}}{currentTime}", style="success")
+
                 print()
                 return
             else:
-                sleep(0.5)
+                time.sleep(0.5)
 
     def enterMatch(self):
-        self.findImage(self.playImage)
-        sleep(3)
+        self.findImage(self.playImage, 'Play')
+        time.sleep(3)
         pdi.press("enter")
 
-        self.findImage(self.trainingImage)
-        sleep(1)
+        self.findImage(self.trainingImage, 'Training')
+        time.sleep(1)
         pdi.press("left")
-        sleep(0.25)
+        time.sleep(0.25)
         pdi.press("enter")
-        sleep(1)
+        time.sleep(1)
 
-        self.findImage(self.loneWolfImage)
-        sleep(1)
+        self.findImage(self.loneWolfImage, 'Lone Wolf')
+        time.sleep(1)
         pdi.press("f")
-        sleep(0.25)
+        time.sleep(0.25)
         pdi.press("f")
-        sleep(0.25)
+        time.sleep(0.25)
         pdi.press("left")
-        sleep(0.25)
+        time.sleep(0.25)
         pdi.press("enter")
-        sleep(1)
+        time.sleep(1)
     
     def preMatchConfig(self):
-        self.findImage(self.locationsImage)
-        sleep(1)
+        self.findImage(self.locationsImage, 'Locations')
+        time.sleep(1)
         pdi.press("down")
-        sleep(0.25)
+        time.sleep(0.25)
         pdi.press("enter")
 
-        self.findImage(self.operatorsImage)
-        sleep(1)
+        self.findImage(self.operatorsImage, 'Operators')
+        time.sleep(1)
         pdi.press("down")
-        sleep(0.25)
+        time.sleep(0.25)
         pdi.press("right")
-        sleep(0.25)
+        time.sleep(0.25)
         pdi.press("right")
-        sleep(0.25)
+        time.sleep(0.25)
         pdi.press("right")
-        sleep(0.25)
+        time.sleep(0.25)
         pdi.press("right")
-        sleep(0.25)
+        time.sleep(0.25)
         pdi.press("enter")
 
-        self.findImage(self.loadoutImage)
-        sleep(1)
+        self.findImage(self.loadoutImage, 'Loadout')
+        time.sleep(1)
         pdi.press("enter")
         
     def retryMatch(self):
-        self.findImage(self.retryImage)
-        sleep(1)
+        self.findImage(self.retryImage, 'Retry')
+        time.sleep(1)
         pdi.press("enter")
 
     def run(self):
