@@ -12,7 +12,7 @@ import time
 import json
 import os
 
-theme = Theme({"success": "green", "error": "bold red1", "process": "blue"})
+theme = Theme({"success": "bright_green", "error": "bold red1", "process": "cadet_blue"})
 console = Console(theme=theme)
 
 pdi.FAILSAFE = False
@@ -27,7 +27,7 @@ class Bot:
         ╚██████╗███████╗╚██████╔╝███████║   ██║   ███████╗██║  ██║██║ ╚████║╚██████╔╝╚███╔███╔╝██║ ╚████║
          ╚═════╝╚══════╝ ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝"""
         self.author = 'IQ.EXE#7301'
-        self.version = '4.2.1'
+        self.version = '4.4.0'
 
         self.consoleSize = os.get_terminal_size()
 
@@ -58,9 +58,8 @@ class Bot:
 
     def welcomeScreen(self):
         console.print(self.logo, style="bold gold3", justify="center")
-        console.print(f"Author: {self.author}", style="purple3", justify="center")
-        console.print(f"Version: {self.version}", style="turquoise2", justify="center")
-        console.print()
+        console.print(f"Author: {self.author}", style="hot_pink3", justify="center", highlight=False)
+        console.print(f"Version: {self.version}", style="turquoise2", justify="center", highlight=False)
 
     def findImage(self, image, imageName):
         lookingForImage = f"[-] LOOKING FOR {imageName.upper()} BUTTON..."
@@ -69,10 +68,10 @@ class Bot:
         lookingForImagePadding = self.consoleSize.columns - len(lookingForImage) -  len(currentTime)
         foundImagePadding = self.consoleSize.columns - len(foundImage) -  len(currentTime)
 
-        console.print(f"{lookingForImage}{'[':>{lookingForImagePadding}}{currentTime}", style="process")
+        console.print(f"\n{lookingForImage}{'[':>{lookingForImagePadding}}{currentTime}", style="process", highlight=False)
         for i in range(300):
             if pyautogui.locateOnScreen(image, confidence=0.6):
-                console.print(f"{foundImage}{'[':>{foundImagePadding}}{currentTime}", style="success")
+                console.print(f"{foundImage}{'[':>{foundImagePadding}}{currentTime}", style="success", highlight=False)
 
                 print()
                 return
@@ -146,16 +145,16 @@ if bot.hashedHwid in bot.jsonHwidList["HWID"]:
     try:
         while True:
             roundCounter += 1
-            console.print(f"---------- [Round:{roundCounter}] ----------", style="dark_cyan")
+            console.print(f"---------- [['cyan']Round:{roundCounter}['/cyan']] ----------", style="dark_cyan", highlight=False)
             bot.run()
-            console.print("", style="")
+            console.print("--------------------------------------------", style="dark_cyan", highlight=False)
     except KeyboardInterrupt:
         end = time.time()
 
     hours, rem = divmod(end-start, 3600)
     minutes, seconds = divmod(rem, 60)
-    console.print(f"\nElapsed time: {int(hours):0>2}:{int(minutes):0>2}:{seconds:0>5.2f}", style="purple3")
+    console.print(f"\nElapsed time: {int(hours):0>2}:{int(minutes):0>2}:{seconds:0>5.2f}", style="blue_violet", highlight=False)
 else:
-    console.print("YOU ARE NOT WHITELISTED", style='error')
+    console.print("YOU ARE NOT WHITELISTED", style='error', highlight=False)
 
 console.input('Press any key to continue...')
