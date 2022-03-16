@@ -3,17 +3,20 @@ from rich.theme import Theme
 import pydirectinput as pdi
 from PIL import Image
 import webbrowser
+import subprocess
 import pyautogui
 import requests
+import hashlib 
 import psutil
 import time
+import json
 import os
 
 theme = Theme({"success": "green", "error": "bold red1", "process": "blue"})
 console = Console(theme=theme)
 
 pdi.FAILSAFE = False
-
+pyautogui.FAILSAFE = False
 class Bot:
     def __init__(self):
         self.logo = """
@@ -23,18 +26,24 @@ class Bot:
         ██║     ██║     ██║   ██║╚════██║   ██║   ██╔══╝  ██╔══██╗██║╚██╗██║██║   ██║██║███╗██║██║╚██╗██║
         ╚██████╗███████╗╚██████╔╝███████║   ██║   ███████╗██║  ██║██║ ╚████║╚██████╔╝╚███╔███╔╝██║ ╚████║
          ╚═════╝╚══════╝ ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝"""
-        self.author = 'RTxNINJA'
-        self.version = '3.0'
+        self.author = 'IQ.EXE#7301'
+        self.version = '4.0.1'
 
         self.consoleSize = os.get_terminal_size()
 
-        self.playImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Play.png", stream=True).raw)
-        self.trainingImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Training.png", stream=True).raw)
-        self.loneWolfImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Lone-Wolf.png", stream=True).raw)
-        self.locationsImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Locations.png", stream=True).raw)
-        self.operatorsImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Operators.png", stream=True).raw)
-        self.loadoutImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Loadout.png", stream=True).raw)
-        self.retryImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/Clusternown/master/assets/Retry.png", stream=True).raw)
+        self.playImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/ClusternownAssets/master/assets/Play.png", stream=True).raw)
+        self.trainingImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/ClusternownAssets/master/assets/Training.png", stream=True).raw)
+        self.loneWolfImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/ClusternownAssets/master/assets/Lone-Wolf.png", stream=True).raw)
+        self.locationsImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/ClusternownAssets/master/assets/Locations.png", stream=True).raw)
+        self.operatorsImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/ClusternownAssets/master/assets/Operators.png", stream=True).raw)
+        self.loadoutImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/ClusternownAssets/master/assets/Loadout.png", stream=True).raw)
+        self.retryImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/ClusternownAssets/master/assets/Retry.png", stream=True).raw)
+
+        self.hwid = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
+        self.hashedHwid = hashlib.sha256(str.encode(self.hwid)).hexdigest()
+        self.r = requests.get('https://rentry.co/HspwiEqGlEuk8VS8L0WSJFpf5HGg5TVnAZ5bhpSkxa9rwzc7PTwSvGb3Iq053jVuDJvHdfL0BFteUTZI/raw')
+        self.hwidList = str(self.r.text)
+        self.jsonHwidList = json.loads(self.hwidList)
 
     def openR6(self):
         webbrowser.open_new_tab("steam://rungameid/359550")
@@ -127,17 +136,22 @@ class Bot:
         self.preMatchConfig()
         self.retryMatch()
 
-def main():
-    bot = Bot()
+bot = Bot()
+start = time.time() 
+if bot.hashedHwid in bot.jsonHwidList["HWID"]:
     bot.isR6Running()
     bot.welcomeScreen()
     bot.enterMatch()
-
-    while True:
-        bot.run()
-
-if __name__ == "__main__":
     try:
-        main()
-    except:
-        pass
+        while True:
+            bot.run()
+    except KeyboardInterrupt:
+        end = time.time()
+
+    hours, rem = divmod(end-start, 3600)
+    minutes, seconds = divmod(rem, 60)
+    print(f"Elapsed time: {int(hours):0>2}:{int(minutes):0>2}:{seconds:0>5.2f}")
+else:
+    console.print("YOU ARE NOT WHITELISTED", style='error')
+
+input('Press any key to continue...')
