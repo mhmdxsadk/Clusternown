@@ -27,7 +27,7 @@ class Bot:
         ╚██████╗███████╗╚██████╔╝███████║   ██║   ███████╗██║  ██║██║ ╚████║╚██████╔╝╚███╔███╔╝██║ ╚████║
          ╚═════╝╚══════╝ ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝"""
         self.author = 'IQ.EXE#7301'
-        self.version = '4.0.1'
+        self.version = '4.2.1'
 
         self.consoleSize = os.get_terminal_size()
 
@@ -81,7 +81,7 @@ class Bot:
 
     def enterMatch(self):
         self.findImage(self.playImage, 'Play')
-        time.sleep(3)
+        time.sleep(2)
         pdi.press("enter")
 
         self.findImage(self.trainingImage, 'Training')
@@ -137,21 +137,25 @@ class Bot:
         self.retryMatch()
 
 bot = Bot()
-start = time.time() 
+start = time.time()
+roundCounter = 0
 if bot.hashedHwid in bot.jsonHwidList["HWID"]:
     bot.isR6Running()
     bot.welcomeScreen()
     bot.enterMatch()
     try:
         while True:
+            roundCounter += 1
+            console.print(f"---------- [Round:{roundCounter}] ----------", style="dark_cyan")
             bot.run()
+            console.print("", style="")
     except KeyboardInterrupt:
         end = time.time()
 
     hours, rem = divmod(end-start, 3600)
     minutes, seconds = divmod(rem, 60)
-    print(f"Elapsed time: {int(hours):0>2}:{int(minutes):0>2}:{seconds:0>5.2f}")
+    console.print(f"\nElapsed time: {int(hours):0>2}:{int(minutes):0>2}:{seconds:0>5.2f}", style="purple3")
 else:
     console.print("YOU ARE NOT WHITELISTED", style='error')
 
-input('Press any key to continue...')
+console.input('Press any key to continue...')
