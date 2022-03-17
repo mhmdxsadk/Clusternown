@@ -1,9 +1,9 @@
+from subprocess import DEVNULL, STDOUT, check_call, check_output
 from rich.console import Console
 from rich.theme import Theme
 import pydirectinput as pdi
 from PIL import Image
 import webbrowser
-import subprocess
 import pyautogui
 import requests
 import hashlib 
@@ -12,7 +12,7 @@ import time
 import json
 import os
 
-theme = Theme({"success": "bright_green", "error": "bold red1", "process": "cadet_blue"})
+theme = Theme({"success": "green1", "error": "bold red1", "process": "dark_slate_gray2"})
 console = Console(theme=theme)
 
 pdi.FAILSAFE = False
@@ -27,7 +27,7 @@ class Bot:
         ╚██████╗███████╗╚██████╔╝███████║   ██║   ███████╗██║  ██║██║ ╚████║╚██████╔╝╚███╔███╔╝██║ ╚████║
          ╚═════╝╚══════╝ ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝"""
         self.author = 'IQ.EXE#7301'
-        self.version = '4.4.0'
+        self.version = '4.6.0'
 
         self.consoleSize = os.get_terminal_size()
 
@@ -39,7 +39,7 @@ class Bot:
         self.loadoutImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/ClusternownAssets/master/assets/Loadout.png", stream=True).raw)
         self.retryImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/ClusternownAssets/master/assets/Retry.png", stream=True).raw)
 
-        self.hwid = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
+        self.hwid = check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
         self.hashedHwid = hashlib.sha256(str.encode(self.hwid)).hexdigest()
         self.r = requests.get('https://rentry.co/HspwiEqGlEuk8VS8L0WSJFpf5HGg5TVnAZ5bhpSkxa9rwzc7PTwSvGb3Iq053jVuDJvHdfL0BFteUTZI/raw')
         self.hwidList = str(self.r.text)
@@ -50,15 +50,13 @@ class Bot:
         
     def isR6Running(self):
         if "RainbowSix.exe" in (p.name() for p in psutil.process_iter()):
-            os.system("taskkill /f /im RainbowSix.exe")
-
-        console.clear()
-        time.sleep(5)
-        self.openR6()
+            check_call('taskkill /f /im RainbowSix.exe', stdout=DEVNULL, stderr=STDOUT)
+            time.sleep(5)
+            self.openR6()
 
     def welcomeScreen(self):
-        console.print(self.logo, style="bold gold3", justify="center")
-        console.print(f"Author: {self.author}", style="hot_pink3", justify="center", highlight=False)
+        console.print(self.logo, style="bold gold1", justify="center")
+        console.print(f"Author: {self.author}", style="magenta1", justify="center", highlight=False)
         console.print(f"Version: {self.version}", style="turquoise2", justify="center", highlight=False)
 
     def findImage(self, image, imageName):
@@ -135,6 +133,7 @@ class Bot:
         self.preMatchConfig()
         self.retryMatch()
 
+console.clear()
 bot = Bot()
 start = time.time()
 roundCounter = 0
@@ -145,9 +144,8 @@ if bot.hashedHwid in bot.jsonHwidList["HWID"]:
     try:
         while True:
             roundCounter += 1
-            console.print(f"---------- [['cyan']Round:{roundCounter}['/cyan']] ----------", style="dark_cyan", highlight=False)
+            console.print(f"---------- [Round:{roundCounter}] ----------", style="blue_violet", highlight=False)
             bot.run()
-            console.print("--------------------------------------------", style="dark_cyan", highlight=False)
     except KeyboardInterrupt:
         end = time.time()
 
