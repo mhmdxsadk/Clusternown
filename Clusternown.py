@@ -68,7 +68,7 @@ class Bot:
 
         console.print(f"\n{lookingForImage}{'[':>{lookingForImagePadding}}{currentTime}", style="process", highlight=False)
         for i in range(300):
-            if pyautogui.locateOnScreen(image, confidence=0.6):
+            if pyautogui.locateOnScreen(image):
                 console.print(f"{foundImage}{'[':>{foundImagePadding}}{currentTime}", style="success", highlight=False)
 
                 print()
