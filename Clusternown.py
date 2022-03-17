@@ -16,7 +16,6 @@ theme = Theme({"success": "green1", "error": "bold red1", "process": "dark_slate
 console = Console(theme=theme)
 
 pdi.FAILSAFE = False
-pyautogui.FAILSAFE = False
 class Bot:
     def __init__(self):
         self.logo = """
@@ -50,7 +49,7 @@ class Bot:
         
     def isR6Running(self):
         if "RainbowSix.exe" in (p.name() for p in psutil.process_iter()):
-            check_call('taskkill /f /im RainbowSix.exe', stdout=DEVNULL, stderr=STDOUT)
+            check_call('taskkill /F /IM RainbowSix.exe', stdout=DEVNULL, stderr=STDOUT)
             time.sleep(5)
             self.openR6()
         else:
@@ -70,7 +69,7 @@ class Bot:
 
         console.print(f"\n{lookingForImage}{'[':>{lookingForImagePadding}}{currentTime}", style="process", highlight=False)
         for i in range(300):
-            if pyautogui.locateOnScreen(image):
+            if pyautogui.locateOnScreen(image, confidence=0.6):
                 console.print(f"{foundImage}{'[':>{foundImagePadding}}{currentTime}", style="success", highlight=False)
 
                 print()
@@ -137,11 +136,11 @@ class Bot:
 
 console.clear()
 bot = Bot()
-start = time.time()
 roundCounter = 0
 if bot.hashedHwid in bot.jsonHwidList["HWID"]:
     bot.welcomeScreen()
     bot.isR6Running()
+    start = time.time()
     bot.enterMatch()
     try:
         while True:
