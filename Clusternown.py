@@ -27,7 +27,7 @@ class Bot:
         ╚██████╗███████╗╚██████╔╝███████║   ██║   ███████╗██║  ██║██║ ╚████║╚██████╔╝╚███╔███╔╝██║ ╚████║
          ╚═════╝╚══════╝ ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝"""
         self.author = 'IQ.EXE#7301'
-        self.version = '4.6.0'
+        self.version = '4.6.1'
 
         self.consoleSize = os.get_terminal_size()
 
@@ -53,7 +53,9 @@ class Bot:
             check_call('taskkill /f /im RainbowSix.exe', stdout=DEVNULL, stderr=STDOUT)
             time.sleep(5)
             self.openR6()
-
+        else:
+            self.openR6()
+        
     def welcomeScreen(self):
         console.print(self.logo, style="bold gold1", justify="center")
         console.print(f"Author: {self.author}", style="magenta1", justify="center", highlight=False)
@@ -138,8 +140,8 @@ bot = Bot()
 start = time.time()
 roundCounter = 0
 if bot.hashedHwid in bot.jsonHwidList["HWID"]:
-    bot.isR6Running()
     bot.welcomeScreen()
+    bot.isR6Running()
     bot.enterMatch()
     try:
         while True:
