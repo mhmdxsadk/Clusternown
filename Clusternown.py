@@ -27,7 +27,7 @@ class Bot:
         ╚██████╗███████╗╚██████╔╝███████║   ██║   ███████╗██║  ██║██║ ╚████║╚██████╔╝╚███╔███╔╝██║ ╚████║
          ╚═════╝╚══════╝ ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝"""
         self.author = 'IQ.EXE#7301'
-        self.version = '4.6.1'
+        self.version = '4.7.2'
 
         self.consoleSize = os.get_terminal_size()
 
@@ -73,6 +73,8 @@ class Bot:
             if pyautogui.locateOnScreen(image, confidence=0.6):
                 console.print(f"{foundImage}{'[':>{foundImagePadding}}{currentTime}\n", style="success", highlight=False)
                 return
+            else:
+                time.sleep(0.5)
 
     def enterMatch(self):
         self.findImage(self.playImage, 'Play')
@@ -134,7 +136,7 @@ bot = Bot()
 roundCounter = 0
 if bot.hashedHwid in bot.jsonHwidList["HWID"]:
     bot.welcomeScreen()
-    # bot.isR6Running()
+    bot.isR6Running()
     start = time.time()
     bot.enterMatch()
     try:
