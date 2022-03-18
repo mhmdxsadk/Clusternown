@@ -16,6 +16,7 @@ theme = Theme({"success": "green1", "error": "bold red1", "process": "dark_slate
 console = Console(theme=theme)
 
 pdi.FAILSAFE = False
+pyautogui.FAILSAFE = False
 class Bot:
     def __init__(self):
         self.logo = """
@@ -70,16 +71,12 @@ class Bot:
         console.print(f"\n{lookingForImage}{'[':>{lookingForImagePadding}}{currentTime}", style="process", highlight=False)
         for i in range(300):
             if pyautogui.locateOnScreen(image, confidence=0.6):
-                console.print(f"{foundImage}{'[':>{foundImagePadding}}{currentTime}", style="success", highlight=False)
-
-                print()
+                console.print(f"{foundImage}{'[':>{foundImagePadding}}{currentTime}\n", style="success", highlight=False)
                 return
-            else:
-                time.sleep(0.5)
 
     def enterMatch(self):
         self.findImage(self.playImage, 'Play')
-        time.sleep(2)
+        time.sleep(1)
         pdi.press("enter")
 
         self.findImage(self.trainingImage, 'Training')
@@ -87,7 +84,6 @@ class Bot:
         pdi.press("left")
         time.sleep(0.25)
         pdi.press("enter")
-        time.sleep(1)
 
         self.findImage(self.loneWolfImage, 'Lone Wolf')
         time.sleep(1)
@@ -98,7 +94,6 @@ class Bot:
         pdi.press("left")
         time.sleep(0.25)
         pdi.press("enter")
-        time.sleep(1)
     
     def preMatchConfig(self):
         self.findImage(self.locationsImage, 'Locations')
@@ -139,7 +134,7 @@ bot = Bot()
 roundCounter = 0
 if bot.hashedHwid in bot.jsonHwidList["HWID"]:
     bot.welcomeScreen()
-    bot.isR6Running()
+    # bot.isR6Running()
     start = time.time()
     bot.enterMatch()
     try:
