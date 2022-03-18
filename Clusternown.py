@@ -10,7 +10,6 @@ import hashlib
 import psutil
 import time
 import json
-import os
 
 theme = Theme({"success": "green1", "error": "bold red1", "process": "dark_slate_gray2"})
 console = Console(theme=theme)
