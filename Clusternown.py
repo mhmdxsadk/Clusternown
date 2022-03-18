@@ -17,6 +17,8 @@ console = Console(theme=theme)
 
 pdi.FAILSAFE = False
 pyautogui.FAILSAFE = False
+
+os.system('mode con: cols=125 lines=35')
 class Bot:
     def __init__(self):
         self.logo = """
@@ -63,7 +65,7 @@ class Bot:
 
     def findImage(self, image, imageName):
         lookingForImage = f"[-] LOOKING FOR {imageName.upper()} BUTTON..."
-        foundImage = f"[✓] FOUND {imageName.upper()} BUTTON!"
+        foundImage = f"[-] FOUND {imageName.upper()} BUTTON!"
         currentTime = f"{time.strftime('%I:%M %p', time.localtime())}]"
         lookingForImagePadding = self.consoleSize.columns - len(lookingForImage) -  len(currentTime)
         foundImagePadding = self.consoleSize.columns - len(foundImage) -  len(currentTime)
