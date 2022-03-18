@@ -19,6 +19,7 @@ pdi.FAILSAFE = False
 pyautogui.FAILSAFE = False
 
 os.system('mode con: cols=125 lines=35')
+consoleSize = os.get_terminal_size()
 class Bot:
     def __init__(self):
         self.logo = """
@@ -30,8 +31,6 @@ class Bot:
          ╚═════╝╚══════╝ ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝"""
         self.author = 'IQ.EXE#7301'
         self.version = '4.7.2'
-
-        self.consoleSize = os.get_terminal_size()
 
         self.playImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/ClusternownAssets/master/assets/Play.png", stream=True).raw)
         self.trainingImage = Image.open(requests.get("https://raw.githubusercontent.com/RTxNINJA/ClusternownAssets/master/assets/Training.png", stream=True).raw)
@@ -67,8 +66,8 @@ class Bot:
         lookingForImage = f"[-] LOOKING FOR {imageName.upper()} BUTTON..."
         foundImage = f"[-] FOUND {imageName.upper()} BUTTON!"
         currentTime = f"{time.strftime('%I:%M %p', time.localtime())}]"
-        lookingForImagePadding = self.consoleSize.columns - len(lookingForImage) -  len(currentTime)
-        foundImagePadding = self.consoleSize.columns - len(foundImage) -  len(currentTime)
+        lookingForImagePadding = consoleSize.columns - len(lookingForImage) -  len(currentTime)
+        foundImagePadding = consoleSize.columns - len(foundImage) -  len(currentTime)
 
         console.print(f"\n{lookingForImage}{'[':>{lookingForImagePadding}}{currentTime}", style="process", highlight=False)
         for i in range(300):
