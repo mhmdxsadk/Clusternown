@@ -19,7 +19,6 @@ pdi.FAILSAFE = False
 pyautogui.FAILSAFE = False
 
 os.system('mode con: cols=125 lines=35')
-consoleSize = os.get_terminal_size()
 class Bot:
     def __init__(self):
         self.logo = """
@@ -66,8 +65,8 @@ class Bot:
         lookingForImage = f"[-] LOOKING FOR {imageName.upper()} BUTTON..."
         foundImage = f"[-] FOUND {imageName.upper()} BUTTON!"
         currentTime = f"{time.strftime('%I:%M %p', time.localtime())}]"
-        lookingForImagePadding = consoleSize.columns - len(lookingForImage) -  len(currentTime)
-        foundImagePadding = consoleSize.columns - len(foundImage) -  len(currentTime)
+        lookingForImagePadding = 125 - len(lookingForImage) -  len(currentTime)
+        foundImagePadding = 125 - len(foundImage) -  len(currentTime)
 
         console.print(f"\n{lookingForImage}{'[':>{lookingForImagePadding}}{currentTime}", style="process", highlight=False)
         for i in range(300):
