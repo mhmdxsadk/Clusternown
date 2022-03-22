@@ -40,19 +40,16 @@ class Bot:
         self.hwid = check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
         self.hashedHwid = hashlib.sha256(str.encode(self.hwid)).hexdigest()
         self.r = requests.get('https://rentry.co/HspwiEqGlEuk8VS8L0WSJFpf5HGg5TVnAZ5bhpSkxa9rwzc7PTwSvGb3Iq053jVuDJvHdfL0BFteUTZI/raw')
-        self.hwidList = str(self.r.text)
-        self.jsonHwidList = json.loads(self.hwidList)
+        self.userInfo = str(self.r.text)
+        self.jsonUserInfo = json.loads(self.userInfo)
+        self.hwidIndex = self.jsonUserInfo["HWID"].index(self.hashedHwid)
 
     def openR6(self):
-        webbrowser.open_new_tab("steam://rungameid/359550")
-        
-    def isR6Running(self):
-        if "RainbowSix.exe" in (p.name() for p in psutil.process_iter()):
-            check_call('taskkill /F /IM RainbowSix.exe', stdout=DEVNULL, stderr=STDOUT)
-            time.sleep(5)
-            self.openR6()
-        else:
-            self.openR6()
+        if "Steam" in self.jsonUserInfo["Platform"][self.hwidIndex]:
+            webbrowser.open_new_tab("steam://rungameid/359550")
+
+        elif "Ubisoft" in self.jsonUserInfo["Platform"][self.hwidIndex]:
+            webbrowser.open_new_tab("uplay://launch/1842/0")
         
     def welcomeScreen(self):
         console.print(self.logo, style="bold gold1", justify="center")
@@ -129,9 +126,9 @@ class Bot:
 console.clear()
 bot = Bot()
 roundCounter = 0
-if bot.hashedHwid in bot.jsonHwidList["HWID"]:
+if bot.hashedHwid in bot.jsonUserInfo["HWID"]:
     bot.welcomeScreen()
-    bot.isR6Running()
+    bot.openR6()
     start = time.time()
     bot.enterMatch()
     try:
