@@ -1,4 +1,4 @@
-from subprocess import DEVNULL, STDOUT, check_call, check_output
+from subprocess import check_output, check_call, DEVNULL, STDOUT
 from rich.console import Console
 from rich.theme import Theme
 import pydirectinput as pdi
@@ -6,7 +6,7 @@ from PIL import Image
 import webbrowser
 import pyautogui
 import requests
-import hashlib 
+import hashlib
 import psutil
 import time
 import json
@@ -42,13 +42,20 @@ class Bot:
         self.r = requests.get('https://rentry.co/HspwiEqGlEuk8VS8L0WSJFpf5HGg5TVnAZ5bhpSkxa9rwzc7PTwSvGb3Iq053jVuDJvHdfL0BFteUTZI/raw')
         self.userInfo = str(self.r.text)
         self.jsonUserInfo = json.loads(self.userInfo)
-        self.hwidIndex = self.jsonUserInfo["HWID"].index(self.hashedHwid)
+
+        self.hwidIndex = 0
+        for i, j in enumerate(self.jsonUserInfo):
+            if j["HWID"] == self.hashedHwid:
+                self.hwidIndex = i
 
     def openR6(self):
-        if "Steam" in self.jsonUserInfo["Platform"][self.hwidIndex]:
+        if "RainbowSix.exe" in (p.name() for p in psutil.process_iter()):
+                check_call('taskkill /F /IM RainbowSix.exe', stdout=DEVNULL, stderr=STDOUT)
+                time.sleep(5)
+        if "Steam" in self.jsonUserInfo[self.hwidIndex]["Platform"]:
             webbrowser.open_new_tab("steam://rungameid/359550")
 
-        elif "Ubisoft" in self.jsonUserInfo["Platform"][self.hwidIndex]:
+        elif "Ubisoft" in self.jsonUserInfo[self.hwidIndex]["Platform"]:
             webbrowser.open_new_tab("uplay://launch/1842/0")
         
     def welcomeScreen(self):
@@ -126,7 +133,7 @@ class Bot:
 console.clear()
 bot = Bot()
 roundCounter = 0
-if bot.hashedHwid in bot.jsonUserInfo["HWID"]:
+if bot.hashedHwid in bot.jsonUserInfo[bot.hwidIndex]["HWID"]:
     bot.welcomeScreen()
     bot.openR6()
     start = time.time()
