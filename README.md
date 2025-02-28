@@ -40,7 +40,7 @@ This app requires Python 3.10 and the following libraries:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/moealkurdi/Clusternown.git
+   git clone https://github.com/mhmdxsadk/Clusternown.git
    ```
 2. Navigate to the directory:
    ```bash
