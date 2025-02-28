@@ -55,7 +55,7 @@ This app requires Python 3.10 and the following libraries:
 
 1. Run the script to start the bot:
    ```bash
-   python bot.py
+   python main.py
    ```
 2. If you’re whitelisted, the bot will launch Rainbow Six Siege based on your platform (Steam or Ubisoft) and enter a match.
 3. The bot will automatically configure match settings, including:
