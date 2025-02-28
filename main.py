@@ -102,12 +102,6 @@ class Bot:
     def welcomeScreen(self):
         console.print(self.logo, style="bold gold1", justify="center")
         console.print(
-            f"Author: {self.author}",
-            style="magenta1",
-            justify="center",
-            highlight=False,
-        )
-        console.print(
             f"Version: {self.version}",
             style="turquoise2",
             justify="center",
