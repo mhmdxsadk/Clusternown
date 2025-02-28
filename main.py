@@ -33,43 +33,43 @@ class Bot:
 
         self.playImage = Image.open(
             requests.get(
-                "https://raw.githubusercontent.com/moealkurdi/ClusternownAssets/master/assets/Play.png",
+                "https://raw.githubusercontent.com/mhmdxsadk/ClusternownAssets/master/assets/Play.png",
                 stream=True,
             ).raw
         )
         self.trainingImage = Image.open(
             requests.get(
-                "https://raw.githubusercontent.com/moealkurdi/ClusternownAssets/master/assets/Training.png",
+                "https://raw.githubusercontent.com/mhmdxsadk/ClusternownAssets/master/assets/Training.png",
                 stream=True,
             ).raw
         )
         self.loneWolfImage = Image.open(
             requests.get(
-                "https://raw.githubusercontent.com/moealkurdi/ClusternownAssets/master/assets/Lone-Wolf.png",
+                "https://raw.githubusercontent.com/mhmdxsadk/ClusternownAssets/master/assets/Lone-Wolf.png",
                 stream=True,
             ).raw
         )
         self.locationsImage = Image.open(
             requests.get(
-                "https://raw.githubusercontent.com/moealkurdi/ClusternownAssets/master/assets/Locations.png",
+                "https://raw.githubusercontent.com/mhmdxsadk/ClusternownAssets/master/assets/Locations.png",
                 stream=True,
             ).raw
         )
         self.operatorsImage = Image.open(
             requests.get(
-                "https://raw.githubusercontent.com/moealkurdi/ClusternownAssets/master/assets/Operators.png",
+                "https://raw.githubusercontent.com/mhmdxsadk/ClusternownAssets/master/assets/Operators.png",
                 stream=True,
             ).raw
         )
         self.loadoutImage = Image.open(
             requests.get(
-                "https://raw.githubusercontent.com/moealkurdi/ClusternownAssets/master/assets/Loadout.png",
+                "https://raw.githubusercontent.com/mhmdxsadk/ClusternownAssets/master/assets/Loadout.png",
                 stream=True,
             ).raw
         )
         self.retryImage = Image.open(
             requests.get(
-                "https://raw.githubusercontent.com/moealkurdi/ClusternownAssets/master/assets/Retry.png",
+                "https://raw.githubusercontent.com/mhmdxsadk/ClusternownAssets/master/assets/Retry.png",
                 stream=True,
             ).raw
         )
